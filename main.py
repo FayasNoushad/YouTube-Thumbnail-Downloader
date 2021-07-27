@@ -4,12 +4,35 @@ import os
 from pyrogram import Client, filters
 
 
+START_TEXT = """
+Hello {}, I am a simple country info telegram bot.
+
+Made by @FayasNoushad
+"""
+
+BUTTONS = InlineKeyboardMarkup(
+        [[
+        InlineKeyboardButton('⚙ Join Updates Channel ⚙', url='https://telegram.me/FayasNoushad')
+        ]]
+    )
+
 Bot = Client(
     "YouTube-Thumbnail-Downloader",
     bot_token = os.environ["BOT_TOKEN"],
     api_id = int(os.environ["API_ID"]),
     api_hash = os.environ["API_HASH"]
 )
+
+@Bot.on_message(filters.command(["start"]))
+async def start(bot, update):
+    text = START_TEXT.format(update.from_user.mention)
+    reply_markup = BUTTONS
+    await update.reply_text(
+        text=text,
+        disable_web_page_preview=True,
+        reply_markup=reply_markup,
+        quote=True
+    )
 
 @Bot.on_message(filters.private & filters.text)
 async def send_thumbnail(bot, update):
