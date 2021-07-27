@@ -5,7 +5,7 @@ from pyrogram import Client, filters
 
 
 START_TEXT = """
-Hello {}, I am a simple country info telegram bot.
+Hello {}, I am a simple youtube thumbnail downloader telegram bot.
 
 Made by @FayasNoushad
 """
