@@ -51,13 +51,15 @@ async def send_thumbnail(bot, update):
         thumbnail = "https://i.ytimg.com/vi/" + id + "maxresdefault.jpg"
         await update.reply_photo(
             photo=thumbnail,
+            reply_markup=BUTTONS,
             quote=True
         )
         await message.delete()
     except Exception as error:
         await message.edit_text(
             text=error,
-            disable_web_page_preview=True
+            disable_web_page_preview=True,
+            reply_markup=BUTTONS
         )
 
 Bot.run()
