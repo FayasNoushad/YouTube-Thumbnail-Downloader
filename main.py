@@ -38,6 +38,7 @@ async def start(bot, update):
 async def send_thumbnail(bot, update):
     message = await update.reply_text(
         text="`Analysing...`",
+        disable_web_page_preview=True,
         quote=True
     )
     if ("youtube.com" in update.text) and ("/" in update.text) and ("=" in update.text):
@@ -55,7 +56,8 @@ async def send_thumbnail(bot, update):
         await message.delete()
     except Exception as error:
         await message.edit_text(
-            text=error
+            text=error,
+            disable_web_page_preview=True
         )
 
 Bot.run()
