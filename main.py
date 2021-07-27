@@ -13,6 +13,10 @@ Bot = Client(
 
 @Bot.on_message(filters.private & filters.text)
 async def send_thumbnail(bot, update):
+    message = await update.reply_text(
+        text="`Analysing...`",
+        quote=True
+    )
     if ("youtube.com" in update.text) and ("/" in update.text) and ("=" in update.text):
         id = update.text.split("=", -1)[1]
     elif ("youtu.be" in update.text) and ("/" in update.text):
@@ -21,8 +25,14 @@ async def send_thumbnail(bot, update):
         id = update.text
     try:
         thumbnail = "https://i.ytimg.com/vi/" + id + "maxresdefault.jpg"
-        await update.reply_photo(thumbnail)
+        await update.reply_photo(
+            photo=thumbnail,
+            quote=True
+        )
+        await message.delete()
     except Exception as error:
-        await update.reply_text(error)
+        await message.edit_text(
+            text=error
+        )
 
 Bot.run()
