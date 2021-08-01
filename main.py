@@ -6,7 +6,11 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 
 START_TEXT = """
-Hello {}, I am a simple youtube thumbnail downloader telegram bot.
+Hello {},
+I am a simple youtube thumbnail downloader telegram bot.
+
+- Send a youtube video link or video ID.
+- I will send the thumbnail.
 
 Made by @FayasNoushad
 """
