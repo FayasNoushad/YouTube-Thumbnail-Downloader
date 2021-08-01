@@ -48,7 +48,7 @@ async def send_thumbnail(bot, update):
     else:
         id = update.text
     try:
-        thumbnail = "https://i.ytimg.com/vi/" + id + "maxresdefault.jpg"
+        thumbnail = "https://i.ytimg.com/vi/" + id + "/maxresdefault.jpg"
         await update.reply_photo(
             photo=thumbnail,
             reply_markup=BUTTONS,
