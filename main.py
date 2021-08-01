@@ -16,6 +16,7 @@ BUTTONS = InlineKeyboardMarkup(
         InlineKeyboardButton('⚙ Join Updates Channel ⚙', url='https://telegram.me/FayasNoushad')
         ]]
     )
+REGEX = r"^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$"
 
 Bot = Client(
     "YouTube-Thumbnail-Downloader",
@@ -35,7 +36,7 @@ async def start(bot, update):
         quote=True
     )
 
-@Bot.on_message(filters.private & filters.text)
+@Bot.on_message(filters.private & filters.regex(REGEX))
 async def send_thumbnail(bot, update):
     message = await update.reply_text(
         text="`Analysing...`",
