@@ -23,7 +23,7 @@ Bot = Client(
     api_hash = os.environ["API_HASH"]
 )
 
-@Bot.on_message(filters.command(["start"]))
+@Bot.on_message(filters.private & filters.command(["start"]))
 async def start(bot, update):
     text = START_TEXT.format(update.from_user.mention)
     reply_markup = BUTTONS
