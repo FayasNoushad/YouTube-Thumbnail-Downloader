@@ -54,3 +54,5 @@ python3 main.py
 - `BOT_TOKEN` Your bot token from @BotFather
 
 </details>
+
+---
