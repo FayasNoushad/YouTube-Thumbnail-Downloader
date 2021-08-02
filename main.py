@@ -40,7 +40,7 @@ async def start(bot, update):
         quote=True
     )
 
-@Bot.on_message(filters.private & filters.regex(REGEX))
+@Bot.on_message(filters.private & filters.text)
 async def send_thumbnail(bot, update):
     message = await update.reply_text(
         text="`Analysing...`",
@@ -54,7 +54,7 @@ async def send_thumbnail(bot, update):
     else:
         id = update.text
     try:
-        thumbnail = "https://i.ytimg.com/vi/" + id + "/maxresdefault.jpg"
+        thumbnail = "https://img.youtube.com/vi/" + id + "/sddefault.jpg"
         await update.reply_photo(
             photo=thumbnail,
             reply_markup=BUTTONS,
