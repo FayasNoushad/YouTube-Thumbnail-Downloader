@@ -48,9 +48,9 @@ async def send_thumbnail(bot, update):
         quote=True
     )
     if ("youtube.com" in update.text) and ("/" in update.text) and ("=" in update.text):
-        id = update.text.split("=", -1)[1]
+        id = update.text.split("=")[-1]
     elif ("youtu.be" in update.text) and ("/" in update.text):
-        id = update.text.split("/", -1)[1]
+        id = update.text.split("/")[-1]
     else:
         id = update.text
     try:
