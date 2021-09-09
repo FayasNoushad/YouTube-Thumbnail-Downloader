@@ -1,6 +1,7 @@
 # Author: Fayas (https://github.com/FayasNoushad) (@FayasNoushad)
 
 import os
+import ytthumb
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
@@ -47,14 +48,8 @@ async def send_thumbnail(bot, update):
         disable_web_page_preview=True,
         quote=True
     )
-    if ("youtube.com" in update.text) and ("/" in update.text) and ("=" in update.text):
-        id = update.text.split("=")[-1]
-    elif ("youtu.be" in update.text) and ("/" in update.text):
-        id = update.text.split("/")[-1]
-    else:
-        id = update.text
     try:
-        thumbnail = "https://img.youtube.com/vi/" + id + "/sddefault.jpg"
+        thumbnail = ytthumb.thumbnail(update.text)
         await update.reply_photo(
             photo=thumbnail,
             reply_markup=BUTTONS,
