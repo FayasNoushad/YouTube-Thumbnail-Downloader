@@ -12,6 +12,11 @@ I am a simple youtube thumbnail downloader telegram bot.
 
 - Send a youtube video link or video ID.
 - I will send the thumbnail.
+- You can also send youtube video link or video id with quality. ( like :- `rokGy0huYEA | sd`
+  - sd - Standard Quality
+  - mq - Medium Quality
+  - hq - High Quality
+  - maxres - Maximum Resolution
 
 Made by @FayasNoushad
 """
@@ -49,7 +54,16 @@ async def send_thumbnail(bot, update):
         quote=True
     )
     try:
-        thumbnail = ytthumb.thumbnail(update.text)
+        if " | " in update.text:
+            video = update.text.split(" | ", -1)[0]
+            quality = update.text.split(" | ", -1)[1]
+        else:
+            video = update.text
+            quality = "sd"
+        thumbnail = ytthumb.thumbnail(
+            video=video,
+            quality=quality
+        )
         await update.reply_photo(
             photo=thumbnail,
             reply_markup=BUTTONS,
