@@ -1,6 +1,6 @@
 # YouTube-Thumbnail-Downloader
 
-An youtube videos thumbnail downloader telegram bot.
+A youtube videos thumbnail downloader telegram bot.
 
 ---
 
