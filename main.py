@@ -46,24 +46,21 @@ async def start(bot, update):
         quote=True
     )
 
-@Bot.on_message(filters.private & filters.text)
+@Bot.on_message(filters.private & filters.regex(REGEX))
 async def send_thumbnail(bot, update):
     message = await update.reply_text(
         text="`Analysing...`",
         disable_web_page_preview=True,
         quote=True
     )
+    if ("youtube.com" in update.text) and ("/" in update.text) and ("=" in update.text):
+        id = update.text.split("=", -1)[1]
+    elif ("youtu.be" in update.text) and ("/" in update.text):
+        id = update.text.split("/", -1)[1]
+    else:
+        id = update.text
     try:
-        if " | " in update.text:
-            video = update.text.split(" | ", -1)[0]
-            quality = update.text.split(" | ", -1)[1]
-        else:
-            video = update.text
-            quality = "sd"
-        thumbnail = ytthumb.thumbnail(
-            video=video,
-            quality=quality
-        )
+        thumbnail = "https://i.ytimg.com/vi/" + id + "/maxresdefault.jpg"
         await update.reply_photo(
             photo=thumbnail,
             reply_markup=BUTTONS,
