@@ -1,21 +1,5 @@
-```
-Made with Python3
-(C) @FayasNoushad
-Copyright permission under MIT License
-License -> https://github.com/FayasNoushad/YouTube-Thumbnail-Downloader/blob/main/LICENSE
-```
-
----
-
-## Deploy
-
-```sh
-git clone https://github.com/FayasNoushad/YouTube-Thumbnail-Downloader.git
-cd YouTube-Thumbnail-Downloader
-pip3 install -r requirements.txt
-# <Create Variables appropriately>
-python3 main.py
-```
+# YouTube Thumbnail Downloader
+A youtube videos thumbnail downloader telegram bot
 
 ---
 
@@ -27,9 +11,10 @@ python3 main.py
 
 ---
 
-## Credits
+## Commands
 
-- [Fayas Noushad](https://github.com/FayasNoushad)
-- [Pyrogram](https://github.com/pyrogram/pyrogram)
+```
+start - For start bot
+```
 
 ---
