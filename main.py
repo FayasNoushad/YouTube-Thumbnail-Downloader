@@ -5,6 +5,14 @@ import ytthumb
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
+load_dotenv()
+
+Bot = Client(
+    "YouTube-Thumbnail-Downloader",
+    bot_token = os.environ.get("BOT_TOKEN"),
+    api_id = int(os.environ.get("API_ID")),
+    api_hash = os.environ.get("API_HASH")
+)
 
 START_TEXT = """Hello {},
 I am a simple youtube thumbnail downloader telegram bot.
@@ -19,24 +27,51 @@ I am a simple youtube thumbnail downloader telegram bot.
 
 Made by @FayasNoushad"""
 
-BUTTONS = InlineKeyboardMarkup([[InlineKeyboardButton('⚙ Join Updates Channel ⚙', url='https://telegram.me/FayasNoushad')]])
+BUTTON = [InlineKeyboardButton('⚙ Join Channel ⚙', url='https://telegram.me/FayasNoushad')]
 
-Bot = Client(
-    "YouTube-Thumbnail-Downloader",
-    bot_token = os.environ["BOT_TOKEN"],
-    api_id = int(os.environ["API_ID"]),
-    api_hash = os.environ["API_HASH"]
+photo_buttons = InlineKeyboardMarkup(
+    [[InlineKeyboardButton('Other Qualities', callback_data='qualities')], BUTTON]
 )
+
+@Bot.on_callback_query()
+async def cb_data(_, message):
+    data = message.data.lower()
+    if data == "qualities":
+        await message.answer('Select a quality')
+        buttons = []
+        for quality in ytthumb.qualities():
+            buttons.append(
+                InlineKeyboardButton(
+                    text=ytthumb.qualities()[quality],
+                    callback_data=quality
+                )
+            )
+        await message.edit_message_reply_markup(
+            InlineKeyboardMarkup(
+                [[buttons[0], buttons[1]], [buttons[2], buttons[3]], BUTTON]
+            )
+        )
+    if data == "back":
+        await message.edit_message_reply_markup(photo_buttons)
+    if data in ytthumb.qualities():
+        thumbnail = ytthumb.thumbnail(
+            video=message.reply_to_message.text,
+            quality=message.data
+        )
+        await message.answer('Updating')
+        await message.edit_message_media(
+            media=InputMediaPhoto(media=thumbnail),
+            reply_markup=photo_buttons
+        )
+        await message.answer('Update Successfully')
 
 
 @Bot.on_message(filters.private & filters.command(["start"]))
-async def start(bot, update):
-    text = START_TEXT.format(update.from_user.mention)
-    reply_markup = BUTTONS
-    await update.reply_text(
-        text=text,
+async def start(_, message):
+    await message.reply_text(
+        text=START_TEXT.format(message.from_user.mention),
         disable_web_page_preview=True,
-        reply_markup=reply_markup,
+        reply_markup=InlineKeyboardMarkup([BUTTON]),
         quote=True
     )
 
@@ -61,7 +96,7 @@ async def send_thumbnail(bot, update):
         )
         await update.reply_photo(
             photo=thumbnail,
-            reply_markup=BUTTONS,
+            reply_markup=photo_buttons,
             quote=True
         )
         await message.delete()
@@ -69,7 +104,7 @@ async def send_thumbnail(bot, update):
         await message.edit_text(
             text=error,
             disable_web_page_preview=True,
-            reply_markup=BUTTONS
+            reply_markup=InlineKeyboardMarkup([BUTTON])
         )
 
 
