@@ -24,10 +24,9 @@ I am a simple youtube thumbnail downloader telegram bot.
   - mq - Medium Quality
   - hq - High Quality
   - maxres - Maximum Resolution
+"""
 
-Made by @FayasNoushad"""
-
-BUTTON = [InlineKeyboardButton('⚙ Join Channel ⚙', url='https://telegram.me/FayasNoushad')]
+BUTTON = [InlineKeyboardButton("Feedback", url='https://telegram.me/FayasNoushad')]
 
 photo_buttons = InlineKeyboardMarkup(
     [[InlineKeyboardButton('Other Qualities', callback_data='qualities')], BUTTON]
