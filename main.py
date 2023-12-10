@@ -2,8 +2,9 @@
 
 import os
 import ytthumb
+from dotenv import load_dotenv
 from pyrogram import Client, filters
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, InputMediaPhoto
 
 load_dotenv()
 
@@ -54,7 +55,7 @@ async def cb_data(_, message):
         await message.edit_message_reply_markup(photo_buttons)
     if data in ytthumb.qualities():
         thumbnail = ytthumb.thumbnail(
-            video=message.reply_to_message.text,
+            video=message.message.reply_to_message.text,
             quality=message.data
         )
         await message.answer('Updating')
@@ -62,10 +63,10 @@ async def cb_data(_, message):
             media=InputMediaPhoto(media=thumbnail),
             reply_markup=photo_buttons
         )
-        await message.answer('Update Successfully')
+        await message.answer('Updated Successfully')
 
 
-@Bot.on_message(filters.private & filters.command(["start"]))
+@Bot.on_message(filters.private & filters.command(["start", "help"]))
 async def start(_, message):
     await message.reply_text(
         text=START_TEXT.format(message.from_user.mention),
